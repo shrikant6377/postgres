@@ -1,13 +1,12 @@
-const validUrl=require("valid-url")
+const validUrl=require("valid-url");
 const shortId = require("shortid")
-const urlmodel= require("../models/urlmodel")
+const urlmodel= require("../models/urlmodel");
 const baseUrl = "http://localhost:3000"
 const redis = require("redis")
 
 const isValid = function (value) {
     if (typeof value == 'undefined' || value === null) return false
-    if (typeof value == 'string' && value.length === 0)
-     return false
+    if (typeof value == 'string' && value.length === 0) return false
     return true
 }
 
@@ -21,20 +20,20 @@ function validateUrl(value) {
 const { promisify } = require("util");
 
 //Connect to redis
-const redisClient = redis.createClient(
-    14521,
-  "redis-14521.c264.ap-south-1-1.ec2.cloud.redislabs.com",
-  { no_ready_check: true }
-);
-redisClient.auth("S4TqxZeWizgL8W32dJo74Rwp5NCyQXSe", function (err) {
-  if (err) throw err;
-});
+// const redisClient = redis.createClient(
+//     14521,
+//   "redis-14521.c264.ap-south-1-1.ec2.cloud.redislabs.com",
+//   { no_ready_check: true }
+// );
+// redisClient.auth("S4TqxZeWizgL8W32dJo74Rwp5NCyQXSe", function (err) {
+//   if (err) throw err;
+// });
 
-redisClient.on("connect", async function () {
-  console.log("Connected to Redis..");
-});
-const SET_ASYNC = promisify(redisClient.SET).bind(redisClient);
-const GET_ASYNC = promisify(redisClient.GET).bind(redisClient);
+// redisClient.on("connect", async function () {
+//   console.log("Connected to Redis..");
+// });
+// const SET_ASYNC = promisify(redisClient.SET).bind(redisClient);
+// const GET_ASYNC = promisify(redisClient.GET).bind(redisClient);
 
 
 const createurl = async function (req, res) {
@@ -83,7 +82,7 @@ const createurl = async function (req, res) {
                 urlCode: data1.urlCode
             }
        
-            return res.status(201).send({ status: true,msg:"success", data: result })
+            return res.status(201).send({ status: true,msg:"success create short url", data: result })
         }   
     catch (err) {
         return res.status(500).send({ status: false, msg: err.message })
